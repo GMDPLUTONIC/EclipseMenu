@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fonts/Rubik.ttf') format('truetype');
+  }
+
+body {
+    background-color: #111111F9;
+    color: #FFFFFFFF;
+}
+
+.eclipse-info h1 {
+    margin: auto 400px;
+}
+
+.eclipse-info p {
+    margin: auto 200px;
+}
+
+.eclipse-info ul {
+    list-style-type:square;
+    margin-left: 20px;
+    margin-right: 50px;
+    margin: 50px 200px;
+  }
+
+.eclipse-info img {
+    margin: auto 440px;
+}
+
+.links img {
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.tab {
+    background-image: linear-gradient(to left, #AB2CB7FF, #6E1E76FF);
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.tab a {
+    background-image: transparent;
+    color: #FFFFFFFF;
+    width: 500px;
+    margin: 250px;
+}
+
+a {
+    color: #AB2CB7FF;
+}

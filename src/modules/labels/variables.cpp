@@ -191,6 +191,14 @@ namespace eclipse::labels {
         // Game variables
         auto* gameManager = GameManager::get();
         m_variables["username"] = rift::Value::string(gameManager->m_playerName);
+        m_variables["cubeIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Cube));
+        m_variables["shipIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Ship));
+        m_variables["ballIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Ball));
+        m_variables["ufoIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::UFO));
+        m_variables["waveIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Wave));
+        m_variables["robotIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Robot));
+        m_variables["spiderIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Spider));
+        m_variables["swingIcon"] = rift::Value::integer(utils::getPlayerIcon(PlayerMode::Swing));
 
         // Hack states (only the important ones)
         m_variables["isCheating"] = rift::Value::boolean(config::getTemp("hasCheats", false));
@@ -250,6 +258,7 @@ namespace eclipse::labels {
             m_variables["time"] = rift::Value::string(utils::formatTime(gjbgl->m_gameState.m_levelTime));
             m_variables["frame"] = rift::Value::integer(static_cast<int>(gjbgl->m_gameState.m_levelTime * 240.f));
             m_variables["isDead"] = rift::Value::boolean(gjbgl->m_player1->m_isDead);
+            m_variables["isDualMode"] = rift::Value::boolean(gjbgl->m_player2 != nullptr && gjbgl->m_player2->isRunning()); // can m_isDualMode be added already
             m_variables["noclipDeaths"] = rift::Value::integer(config::getTemp("noclipDeaths", 0));
             m_variables["noclipAccuracy"] = rift::Value::floating(config::getTemp("noclipAccuracy", 100.f));
             m_variables["progress"] = rift::Value::floating(utils::getActualProgress(gjbgl));
@@ -262,6 +271,11 @@ namespace eclipse::labels {
                 m_variables["realProgress"] = rift::Value::floating(0.f);
                 m_variables["objects"] = rift::Value::integer(static_cast<int>(ed->m_objects->count()));
             }
+
+            // Player icon
+            auto gamemode = utils::getGameMode(gjbgl->m_player1);
+            m_variables["gamemode"] = rift::Value::string(utils::gameModeName(gamemode));
+            m_variables["playerIcon"] = rift::Value::integer(utils::getPlayerIcon(gamemode));
         } else {
             removeVariable("levelID");
             removeVariable("levelName");
@@ -289,6 +303,7 @@ namespace eclipse::labels {
             removeVariable("time");
             removeVariable("frame");
             removeVariable("isDead");
+            removeVariable("isDualMode");
             removeVariable("noclipDeaths");
             removeVariable("noclipAccuracy");
             removeVariable("editorMode");
@@ -298,6 +313,10 @@ namespace eclipse::labels {
             removeVariable("runFrom");
             removeVariable("bestRun");
             removeVariable("lastDeath");
+
+            auto gamemode = utils::getGameMode(nullptr);
+            m_variables["gamemode"] = rift::Value::string(utils::gameModeName(gamemode));
+            m_variables["playerIcon"] = rift::Value::integer(utils::getPlayerIcon(gamemode));
         }
     }
 
